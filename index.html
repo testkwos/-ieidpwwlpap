@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lurix Hub</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #6E96FF;
+            --primary-glow: rgba(110, 150, 255, 0.45);
+            --primary-soft: rgba(110, 150, 255, 0.12);
+            
+            --bg-black: #050608;
+            --card-bg: rgba(12, 15, 23, 0.82);
+            --border-color: rgba(110, 150, 255, 0.25);
+            
+            --youtube-color: #FF0055;
+            --youtube-glow: rgba(255, 0, 85, 0.35);
+            --discord-color: #5865F2;
+            --discord-glow: rgba(88, 101, 242, 0.35);
+
+            --text-main: #f3f5fc;
+            --text-sub: #949db1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 12px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(130px);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulseGlow 10s infinite alternate ease-in-out;
+        }
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: -120px;
+            left: -120px;
+            opacity: 0.25;
+        }
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: #4158D0;
+            bottom: -100px;
+            right: -100px;
+            opacity: 0.2;
+            animation-delay: -5s;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.15) translate(30px, 20px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 620px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 34px 28px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9),
+                        0 0 40px rgba(110, 150, 255, 0.12);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        .logo-title {
+            font-size: 2.7rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px var(--primary-glow);
+            margin-bottom: 10px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary-soft);
+            border: 1px solid var(--border-color);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00ff88;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff88;
+            animation: blink 1.8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .box-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .box-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .box-title i {
+            color: var(--primary);
+        }
+
+        .game-card {
+            background: rgba(8, 10, 15, 0.85);
+            border: 1px solid rgba(110, 150, 255, 0.25);
+            border-radius: 18px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .game-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 22px rgba(110, 150, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .game-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .game-logo-img {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 1.5px solid var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover .game-logo-img {
+            transform: scale(1.08) rotate(2deg);
+        }
+
+        .game-name {
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: #ffffff;
+            letter-spacing: 0.3px;
+        }
+
+        .game-status-text {
+            font-size: 0.78rem;
+            color: #00ff88;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 3px;
+        }
+
+        .mini-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #00ff88;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #00ff88;
+        }
+
+        .game-tag {
+            background: rgba(110, 150, 255, 0.15);
+            color: var(--primary);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .input-display {
+            background: rgba(8, 10, 15, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 10px 12px 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-display:hover, .input-display:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(110, 150, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .code-wrapper {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .code-content {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.83rem;
+            color: #d8deed;
+            white-space: nowrap;
+            overflow-x: auto;
+            width: 100%;
+            display: block;
+            padding-bottom: 2px;
+        }
+
+        .key-content {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+        }
+
+        .btn-action {
+            background: var(--primary);
+            color: #04060a;
+            border: none;
+            padding: 11px 20px;
+            min-height: 44px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            flex-shrink: 0;
+        }
+
+        .btn-action:hover {
+            filter: brightness(1.15);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(110, 150, 255, 0.5);
+        }
+
+        .btn-action:active {
+            transform: translateY(0);
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        .social-btn {
+            background: rgba(10, 13, 20, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 14px 16px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn.youtube:hover {
+            border-color: var(--youtube-color);
+            background: rgba(255, 0, 85, 0.08);
+            color: var(--youtube-color);
+            box-shadow: 0 0 20px var(--youtube-glow);
+            transform: translateY(-2px);
+        }
+
+        .social-btn.discord:hover {
+            border-color: var(--discord-color);
+            background: rgba(88, 101, 242, 0.08);
+            color: var(--discord-color);
+            box-shadow: 0 0 20px var(--discord-glow);
+            transform: translateY(-2px);
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+            width: calc(100% - 32px);
+            max-width: 460px;
+        }
+
+        .capsule-toast {
+            pointer-events: auto;
+            background: rgba(10, 13, 22, 0.92);
+            backdrop-filter: blur(28px) saturate(200%);
+            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            border: 1px solid var(--primary);
+            border-radius: 24px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95),
+                        0 0 30px var(--primary-glow);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-40px) scale(0.88);
+            transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .capsule-toast.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .toast-icon-glow {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-soft);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            color: var(--primary);
+            flex-shrink: 0;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .toast-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .toast-line-vn {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast-line-en {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lang-tag {
+            font-size: 0.65rem;
+            padding: 1px 6px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(110, 150, 255, 0.2);
+            color: var(--primary);
+            border: 0.5px solid var(--border-color);
+        }
+
+        .lang-tag.en {
+            background: rgba(255, 255, 255, 0.08);
+            color: #a0aabf;
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .toast-close-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 6px;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toast-close-btn:hover {
+            color: #ffffff;
+        }
+
+        .toast-progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(90deg, var(--primary), #ffffff);
+            transform-origin: left;
+            box-shadow: 0 0 8px var(--primary);
+        }
+
+        .capsule-toast.warning {
+            border-color: #FFB800;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(255, 184, 0, 0.3);
+        }
+        .capsule-toast.warning .toast-icon-glow {
+            background: rgba(255, 184, 0, 0.15);
+            border-color: rgba(255, 184, 0, 0.35);
+            color: #FFB800;
+            box-shadow: 0 0 15px rgba(255, 184, 0, 0.25);
+        }
+        .capsule-toast.warning .toast-progress-bar {
+            background: linear-gradient(90deg, #FFB800, #FFF5C5);
+            box-shadow: 0 0 8px #FFB800;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.78rem;
+            color: var(--text-sub);
+        }
+
+        @media (max-width: 520px) {
+            .card {
+                padding: 24px 18px;
+            }
+
+            .logo-title {
+                font-size: 2.1rem;
+            }
+
+            .input-display {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-action {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="container">
+        <div class="card">
+            
+            <div class="header">
+                <h1 class="logo-title">LURIX HUB</h1>
+                <div class="status-badge">
+                    <span class="dot"></span> Online & Active
+                </div>
+            </div>
+
+            <div class="box-wrapper">
+                <div class="box-title">
+                    <i class="fa-solid fa-gamepad"></i> Supported Game
+                </div>
+                <div class="game-card">
+                    <div class="game-info">
+                        <img 
+                            src="https://tr.rbxcdn.com/180DAY-f0e7d58fbc789e9f64e03043831ecf04/150/150/Image/Webp/noFilter" 
+                            alt="Stand Upright Logo" 
+                            class="game-logo-img"
+                            onerror="this.onerror=null; this.src='https://tr.rbxcdn.com/180DAY-a773e3a479b0bf31c94d306b998cf119/150/150/Image/Webp/noFilter';"
+                        >
+                        <div>
+                            <div class="game-name">Stand Upright</div>
+                            <div class="game-status-text">
+                                <span class="mini-dot"></span> Fully Supported
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-tag">ROBLOX</div>
+                </div>
+            </div>
+
+            <div class="box-wrapper">
+                <div class="box-title">
+                    <i class="fa-solid fa-code"></i> Script loader
+                </div>
+                <div class="input-display">
+                    <div class="code-wrapper">
+                        <span class="code-content" id="scriptCode">loadstring(game:HttpGet("https://api.jnkie.com/api/v1/luascripts/public/4ec630b95743ef465a8e6ac5e840b9f4cf535f42ae3bd2bc766a8fdd3fb04e86/download"))()</span>
+                    </div>
+                    <button class="btn-action" onclick="copyScript()">
+                        <i class="fa-regular fa-copy"></i> Copy Script
+                    </button>
+                </div>
+            </div>
+
+            <div class="box-wrapper">
+                <div class="box-title">
+                    <i class="fa-solid fa-key"></i> Key
+                </div>
+                <div class="input-display">
+                    <div class="code-wrapper">
+                        <input type="text" class="key-content" id="keyText" value="a5dcf214-d194-4be8-8bac-2bb357f152c7" readonly>
+                    </div>
+                    <button class="btn-action" onclick="copyKey()">
+                        <i class="fa-regular fa-copy"></i> Copy Key
+                    </button>
+                </div>
+            </div>
+
+            <div class="social-grid">
+                <button class="social-btn youtube" onclick="copyYouTubeLink()">
+                    <i class="fa-brands fa-youtube"></i> YouTube
+                </button>
+                <button class="social-btn discord" onclick="notifyDiscordNotReady()">
+                    <i class="fa-brands fa-discord"></i> Discord
+                </button>
+            </div>
+
+            <div class="footer">
+                 <strong>Lurix Hub</strong> &copy; 2026
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const YT_LINK = "https://www.youtube.com/@owizk";
+
+        function copyToClipboard(text) {
+            return new Promise((resolve, reject) => {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(resolve).catch(() => {
+                        fallbackCopy(text) ? resolve() : reject();
+                    });
+                } else {
+                    fallbackCopy(text) ? resolve() : reject();
+                }
+            });
+        }
+
+        function fallbackCopy(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            textArea.style.top = "0";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                return successful;
+            } catch (err) {
+                document.body.removeChild(textArea);
+                return false;
+            }
+        }
+
+        function triggerSensoryFeedback(type = 'success') {
+            if (navigator.vibrate) {
+                if (type === 'success') navigator.vibrate([15, 30, 15]);
+                else navigator.vibrate([30, 50, 30]);
+            }
+
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                if (ctx.state === 'suspended') {
+                    ctx.resume();
+                }
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.type = 'sine';
+
+                if (type === 'success') {
+                    osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.12);
+                } else {
+                    osc.frequency.setValueAtTime(350, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.15);
+                }
+
+                gain.gain.setValueAtTime(0.07, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc.start();
+                osc.stop(ctx.currentTime + 0.18);
+            } catch(e) {}
+        }
+
+        function notifyBilingual({ textVN, textEN, icon = 'fa-solid fa-circle-check', type = 'success', duration = 3500 }) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `capsule-toast ${type === 'warning' ? 'warning' : ''}`;
+
+            toast.innerHTML = `
+                <div class="toast-icon-glow">
+                    <i class="${icon}"></i>
+                </div>
+                <div class="toast-body">
+                    <div class="toast-line-vn">
+                        <span class="lang-tag">VN</span> ${textVN}
+                    </div>
+                    <div class="toast-line-en">
+                        <span class="lang-tag en">EN</span> ${textEN}
+                    </div>
+                </div>
+                <button class="toast-close-btn" onclick="this.parentElement.remove()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="toast-progress-bar"></div>
+            `;
+
+            container.appendChild(toast);
+            triggerSensoryFeedback(type);
+
+            requestAnimationFrame(() => {
+                toast.classList.add('show');
+                const progress = toast.querySelector('.toast-progress-bar');
+                progress.style.transition = `transform ${duration}ms linear`;
+                progress.style.transform = 'scaleX(0)';
+            });
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) toast.remove();
+                }, 450);
+            }, duration);
+        }
+
+        function copyScript() {
+            const scriptText = document.getElementById("scriptCode").innerText.trim();
+            copyToClipboard(scriptText).then(() => {
+                notifyBilingual({
+                    textVN: 'đã copy script loader',
+                    textEN: 'Script loader copied to clipboard',
+                    icon: 'fa-solid fa-terminal'
+                });
+            });
+        }
+
+        function copyKey() {
+            const keyText = document.getElementById("keyText").value.trim();
+            copyToClipboard(keyText).then(() => {
+                notifyBilingual({
+                    textVN: 'Đã copy key',
+                    textEN: 'Access Key copied to clipboard',
+                    icon: 'fa-solid fa-key'
+                });
+            });
+        }
+
+        function copyYouTubeLink() {
+            copyToClipboard(YT_LINK).then(() => {
+                notifyBilingual({
+                    textVN: 'Đã copy link kênh YouTube',
+                    textEN: 'YouTube channel link copied',
+                    icon: 'fa-brands fa-youtube'
+                });
+            });
+        }
+
+        function notifyDiscordNotReady() {
+            notifyBilingual({
+                textVN: 'Server Discord chưa được tạo',
+                textEN: 'Discord server has not been created yet',
+                icon: 'fa-solid fa-triangle-exclamation',
+                type: 'warning'
+            });
+        }
+    </script>
+</body>
+</html>
